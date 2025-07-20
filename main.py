@@ -1,5 +1,8 @@
 import streamlit as st
 import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.title("📝 AI User Story Generator")
 
@@ -13,13 +16,16 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def generate_user_story(requirement):
     prompt = f"Convert this into an Agile user story:\n\n'{requirement}'\n\nUse the format: As a [user], I want to [do something], so that [benefit]."
-    
-    response = openai.ChatCompletion.create(
+
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
-        max_tokens=150
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
     )
+
+    return response.choices[0].message.content.strip()
+
     
     return response.choices[0].message['content'].strip()
 
