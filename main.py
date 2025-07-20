@@ -1,33 +1,27 @@
 import streamlit as st
-import openai
-from openai import OpenAI
+import requests
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+st.title("📝 AI User Story Generator (HuggingFace)")
 
-st.title("📝 AI User Story Generator")
+st.write("Paste a raw requirement below and get a clear Agile user story.")
 
-st.write("Paste a raw requirement below and get a clean Agile user story.")
-
-# Input box
 raw_input = st.text_area("Raw requirement:", placeholder="e.g. Notify users of updates")
 
-# Load OpenAI key from Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
-
-def generate_user_story(requirement):
-    prompt = f"Convert this into an Agile user story:\n\n'{requirement}'\n\nUse the format: As a [user], I want to [do something], so that [benefit]."
-
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response.choices[0].message.content.strip()
-
+def generate_user_story(prompt):
+    api_url = "https://api-inference.huggingface.co/models/google/flan-t5-base"
+    headers = {"Authorization": f"Bearer {st.secrets['HF_TOKEN']}"}
     
-    return response.choices[0].message['content'].strip()
+    payload = {
+        "inputs": f"Convert this to a user story: {prompt}"
+    }
+
+    response = requests.post(api_url, headers=headers, json=payload)
+
+    if response.status_code == 200:
+        result = response.json()
+        return result[0]['generated_text']
+    else:
+        return "⚠️ Error: API call failed."
 
 if raw_input:
     story = generate_user_story(raw_input)
