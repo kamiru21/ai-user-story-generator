@@ -25,5 +25,13 @@ def generate_user_story(prompt):
         else:
             return "⚠️ No output received."
     elif response.status_code == 503:
-        return """⏳ Model is loading — please wait 30 seconds and try again."""
+        return "⏳ Model is loading — please wait 30 seconds and try again."
+    elif response.status_code == 401:
+        return "🔒 Invalid Hugging Face token. Check your secrets."
+    else:
+        return f"❌ API call failed: {response.status_code}"
 
+if raw_input:
+    story = generate_user_story(raw_input)
+    st.subheader("✅ Rewritten User Story")
+    st.markdown(f"> {story}")
