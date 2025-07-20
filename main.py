@@ -25,4 +25,5 @@ def generate_user_story(prompt):
         else:
             return "⚠️ No output received."
     elif response.status_code == 503:
-        return "⏳ Model is loading — please wait
+        return """⏳ Model is loading — please wait 30 seconds and try again."""
+
