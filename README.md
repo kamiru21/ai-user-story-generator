@@ -27,7 +27,7 @@ A lightweight estimator that suggests story points using a consistent rubric (co
 <img width="766" height="614" alt="Main" src="https://github.com/user-attachments/assets/d547e38f-ee8a-4cc2-8348-167d0bf9550d" />
 
 
-- Thereafter, press enter to run the app. You will see the results & chart (examples below) in a short period of time
+- Thereafter, press enter to run the app. You will see the results & explanation (example below)
 
 <img width="750" height="588" alt="Results" src="https://github.com/user-attachments/assets/48f16ac9-3308-4e52-a16a-8b94eb826949" />
 
