@@ -27,7 +27,7 @@ def generate_user_story(prompt, token):
     if not token:
         return "🔒 Missing Hugging Face token. Add HF_TOKEN to .streamlit/secrets.toml."
 
-    api_url = api_url = "https://api-inference.huggingface.co/models/distilgpt2"
+    api_url = api_url = api_url = "https://router.huggingface.co/hf-inference/models/distilgpt2"
     headers = {"Authorization": f"Bearer {token}"}
 
     payload = {
